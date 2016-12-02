@@ -130,8 +130,6 @@ public class TcpClient1 : MonoBehaviour
 
 	//System.Random rnd = new System.Random();
 
-	bool connected = false;
-
 	public GameObject inputField;
 
 	static GameObject player1;
@@ -161,35 +159,42 @@ public class TcpClient1 : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		print (lineReceived);
+
+		//When server tells us to play, we change the scene to Game
+		if (lineReceived == "Let's play") {
+			SceneManager.LoadScene ("Game");
+		}
+
+		//When the scene is Game
 		if (SceneManager.GetActiveScene ().name == "Game") {
+			//If the server tells me that it's my turn, then we run the (local) function to roll dice.
 			if (lineReceived == "Your turn") {
 				rollDice ();
-			} else {
+			} 
+			//Else the server message is about the other players, and we go to this code.
+			else if (lineReceived.IndexOf ("-") != -1) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
 				diceNum = Int32.Parse (lineReceived.Split ('-') [1]);
 				if (playerNum == 1) {
 					sumbreror1 += diceNum;
-
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
 				}
 
 				if (playerNum == 2) {
 					sumbreror2 += diceNum;
-
 					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror1]);
 				}
 
 
 				if (playerNum == 3) {
 					sumbreror3 += diceNum;
-
 					player3.transform.position = new Vector3 (xPoses [sumbreror3], yPoses [sumbreror3]);
 				}
 
 
 				if (playerNum == 4) {
 					sumbreror4 += diceNum;
-
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 
@@ -210,38 +215,45 @@ public class TcpClient1 : MonoBehaviour
 
 			if (lineReceived == "Welcome player 1") {
 				player1.GetComponent<SpriteRenderer> ().enabled = true;
-				myPlayerNumber = 1;
-				print ("I am player: " + myPlayerNumber);
-				lineReceived = "haps";
-				iHaveJoined = true;
+				if (iHaveJoined == false) {
+					myPlayerNumber = 1;
+					print ("I am player: " + myPlayerNumber);
+					lineReceived = "haps";
+					iHaveJoined = true;
+				}
 			}
 
 			if (lineReceived == "Welcome player 2") {
 				player2.GetComponent<SpriteRenderer> ().enabled = true;
-				myPlayerNumber = 2;
-				print ("I am player: " + myPlayerNumber);
-				lineReceived = "haps";
-				iHaveJoined = true;
+				if (iHaveJoined == false) {
+					myPlayerNumber = 2;
+					print ("I am player: " + myPlayerNumber);
+					lineReceived = "haps";
+					iHaveJoined = true;
+				}
 			}
 
 			if (lineReceived == "Welcome player 3") {
 				player3.GetComponent<SpriteRenderer> ().enabled = true;
-				myPlayerNumber = 3;
-				print ("I am player: " + myPlayerNumber);
-				lineReceived = "haps";
-				iHaveJoined = true;
-
+				if (iHaveJoined == false) {
+					myPlayerNumber = 3;
+					print ("I am player: " + myPlayerNumber);
+					lineReceived = "haps";
+					iHaveJoined = true;
+				}
 			}
 
 			if (lineReceived == "Welcome player 4") {
 				player4.GetComponent<SpriteRenderer> ().enabled = true;
-				myPlayerNumber = 4;
-				print ("I am player: " + myPlayerNumber);
-				lineReceived = "haps";
-				iHaveJoined = true;
+				if (iHaveJoined == false) {
+					myPlayerNumber = 4;
+					print ("I am player: " + myPlayerNumber);
+					lineReceived = "haps";
+					iHaveJoined = true;
+				}
 			}
+			
 				
-			//print (lineReceived);
 		}
 
 
@@ -272,11 +284,10 @@ public class TcpClient1 : MonoBehaviour
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
-			client = new TcpClient ("172.20.10.4", port);
+			client = new TcpClient ("172.20.10.2", port);
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
 			reader = new StreamReader (stream, Encoding.ASCII);
-			connected = true;
 		}
 	}
 

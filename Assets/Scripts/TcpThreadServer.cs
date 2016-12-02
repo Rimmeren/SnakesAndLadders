@@ -16,7 +16,7 @@ public class TcpThreadServer : MonoBehaviour
 
     int port = 13456;
 
-    IPAddress myIp = IPAddress.Parse("172.20.10.3");
+    IPAddress myIp = IPAddress.Parse("172.20.10.2");
 
     //Server and Client connection
     TcpListener listener;
