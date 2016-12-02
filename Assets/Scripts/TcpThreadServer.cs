@@ -16,7 +16,7 @@ public class TcpThreadServer : MonoBehaviour
 
     int port = 13456;
 
-    IPAddress myIp = IPAddress.Parse("172.20.10.4");
+    IPAddress myIp = IPAddress.Parse("172.20.10.3");
 
     //Server and Client connection
     TcpListener listener;
@@ -95,8 +95,6 @@ public class TcpThreadServer : MonoBehaviour
 
         listener = new TcpListener(myIp, port);
 
-
-
         listener.Start();
 
         print("Server has been created and your friends can join with the IP: " + myIp);
@@ -124,11 +122,13 @@ public class TcpThreadServer : MonoBehaviour
 
         static int playerCount;
 
+		string readLine;
+
         private NetworkStream stream;
 
         StreamWriter writer;
         StreamReader reader;
-        string readLine;
+        
         Thread clientThread;
 
         public HandleClients(TcpClient client)
