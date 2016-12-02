@@ -23,10 +23,15 @@ public class TcpThreadServer : MonoBehaviour
     TcpClient client;
 
     //Players
-   static GameObject player1;
-   static GameObject player2;
-   static GameObject player3;
-   static GameObject player4;
+    static GameObject player1;
+    static GameObject player2;
+    static GameObject player3;
+    static GameObject player4;
+
+    static bool player1Image = false;
+    static bool player2Image = false;
+    static bool player3Image = false;
+    static bool player4Image = false;
 
     bool server = false;
     static bool game = false;
@@ -50,6 +55,17 @@ public class TcpThreadServer : MonoBehaviour
 
         if (server == true)
         {
+            if (player1Image)
+                player1.GetComponent<SpriteRenderer>().enabled = true;
+
+            if (player2Image)
+                player2.GetComponent<SpriteRenderer>().enabled = true;
+
+            if (player3Image)
+                player3.GetComponent<SpriteRenderer>().enabled = true;
+
+            if (player4Image)
+                player4.GetComponent<SpriteRenderer>().enabled = true;
 
             if (listener.Pending() == true)
             {
@@ -74,16 +90,16 @@ public class TcpThreadServer : MonoBehaviour
         }
     }
 
-	public void startServer ()
-	{
+    public void startServer()
+    {
 
-		listener = new TcpListener (myIp, port);
+        listener = new TcpListener(myIp, port);
 
 
 
         listener.Start();
 
-		print ("Server has been created and your friends can join with the IP: " + myIp);
+        print("Server has been created and your friends can join with the IP: " + myIp);
 
         server = true;
 
@@ -106,7 +122,7 @@ public class TcpThreadServer : MonoBehaviour
 
         TcpClient randomClient;
 
-        int playerCount;
+        static int playerCount;
 
         private NetworkStream stream;
 
@@ -132,11 +148,12 @@ public class TcpThreadServer : MonoBehaviour
             playerCount++;
 
             clientThread.Name = "player" + playerCount;
+
             print(clientThread.Name);
 
             clientThread.Start();
 
-            print("User with IP: " + ((IPEndPoint)randomClient.Client.RemoteEndPoint).Address.ToString() + " has joined the game");
+            print("User with IP: " + ((IPEndPoint)randomClient.Client.RemoteEndPoint).Address.ToString() + " has joined the game as " + clientThread.Name);
         }
 
         void playGame()
@@ -147,14 +164,25 @@ public class TcpThreadServer : MonoBehaviour
 
                 if (clientThread.Name == "player1")
                 {
-                    player1.GetComponent<SpriteRenderer> ().enabled = true;
-                    print("Player "+ playerCount+ "has connected");
-                    writer.WriteLine(playerCount);
+                    player1Image = true;
+                    writer.WriteLine("Welcome player " + playerCount);
+
                 }
                 if (clientThread.Name == "player2")
                 {
-                    player2.GetComponent<SpriteRenderer> ().enabled = true;
-                    print("Player " + playerCount + "has connected");
+                    player2Image = true;
+
+                    writer.WriteLine("Welcome player " + playerCount);
+
+                }
+                if (clientThread.Name == "player3")
+                {
+                    player3Image = true;
+                    writer.WriteLine(playerCount);
+                }
+                if (clientThread.Name == "player4")
+                {
+                    player4Image = true;
                     writer.WriteLine(playerCount);
                 }
             }

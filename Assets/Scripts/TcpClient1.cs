@@ -6,6 +6,7 @@ using System.Text;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class TcpClient1 : MonoBehaviour {
 
@@ -52,7 +53,7 @@ public class TcpClient1 : MonoBehaviour {
 
 		if (connected) {
 			communication ();
-			lineReceived = reader.ReadLine();
+			//lineReceived = reader.ReadLine();
             
 		}
         if (SceneManager.GetActiveScene().name == "Game")
@@ -105,25 +106,29 @@ public class TcpClient1 : MonoBehaviour {
             //This is where we get our player number
             myPlayerNumber = Int32.Parse(reader.ReadLine());
 
-		}
+            connected = true;
 
-		if (SceneManager.GetActiveScene ().name == "Create") {
- 
-			client = new TcpClient ("172.20.10.4", port);
-			stream = client.GetStream ();
-			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
-			reader = new StreamReader (stream, Encoding.ASCII);
-		}
+        }
 
-		connected = true;
+        if (SceneManager.GetActiveScene().name == "Create")
+        {
+            client = new TcpClient("172.20.10.4", port);
+            stream = client.GetStream();
+            writer = new StreamWriter(stream, Encoding.ASCII) { AutoFlush = true };
+            reader = new StreamReader(stream, Encoding.ASCII);
+            connected = true;
+        }
+
+		
 
 
 	}
 
+  
 	void communication () {
 
 
-		print("Received from server: " + lineReceived);
+		//print("Received from server: " + lineReceived);
 
 
 	}
