@@ -13,7 +13,8 @@ public class TcpClient1 : MonoBehaviour {
 	int port = 13456;
 	string login;
 	string lineReceived;
-
+    int sumbreror1, sumbreror2, sumbreror3, sumbreror4;
+    int myPlayerNumber; 
 	TcpClient client;
 	NetworkStream stream;
 	StreamWriter writer;
@@ -39,7 +40,10 @@ public class TcpClient1 : MonoBehaviour {
 		player2 = GameObject.Find ("Player2");
 		player3 = GameObject.Find ("Player3");
 		player4 = GameObject.Find ("Player4");
-
+        sumbreror1 = 0;
+        sumbreror2 = 0;
+        sumbreror3 = 0;
+        sumbreror4 = 0;
 	}
 
 	// Update is called once per frame
@@ -48,10 +52,15 @@ public class TcpClient1 : MonoBehaviour {
 		if (connected) {
 			communication ();
 			lineReceived = reader.ReadLine();
-
+            
 		}
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
 
-		if (SceneManager.GetActiveScene().name == "Lobby") {
+        }
+
+        if (SceneManager.GetActiveScene().name == "Lobby") {
+            
 
 			if (lineReceived == "Welcome player 1") {
 				player1.GetComponent<SpriteRenderer> ().enabled = true;
@@ -88,6 +97,11 @@ public class TcpClient1 : MonoBehaviour {
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
 			reader = new StreamReader (stream, Encoding.ASCII);
+            writer.WriteLine("Player joined");
+
+            //This is where we get our player number
+            myPlayerNumber = Int32.Parse(reader.ReadLine());
+
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
