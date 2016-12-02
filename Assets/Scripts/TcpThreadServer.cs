@@ -16,11 +16,7 @@ public class TcpThreadServer : MonoBehaviour
 
     int port = 13456;
 
-<<<<<<< HEAD
     IPAddress myIp = IPAddress.Parse("172.20.10.4");
-=======
-	IPAddress myIp = "172.20.10.3";
->>>>>>> c714d3a18687039477842b00c804b86831c13bca
 
     //Server and Client connection
     TcpListener listener;
@@ -36,20 +32,6 @@ public class TcpThreadServer : MonoBehaviour
     static bool game = false;
     static bool create = false;
 
-<<<<<<< HEAD
-=======
-	// Use this for initialization
-	void Start ()
-	{
-		player1 = GameObject.Find ("Player1");
-		player2 = GameObject.Find ("Player2");
-		player3 = GameObject.Find ("Player3");
-		player4 = GameObject.Find ("Player4");
-
-
-	
-	}
->>>>>>> c714d3a18687039477842b00c804b86831c13bca
 
     // Use this for initialization
     void Start()
@@ -78,7 +60,7 @@ public class TcpThreadServer : MonoBehaviour
 
             }
 
-<<<<<<< HEAD
+
         }
         if (SceneManager.GetActiveScene().name == "Game")
         {
@@ -91,23 +73,17 @@ public class TcpThreadServer : MonoBehaviour
             game = false;
         }
     }
-=======
+
 	public void startServer ()
 	{
 
 		listener = new TcpListener (myIp, port);
->>>>>>> c714d3a18687039477842b00c804b86831c13bca
 
 
-    public void startServer()
-    {
-        listener = new TcpListener(myIp, port);
 
-<<<<<<< HEAD
         listener.Start();
-=======
+
 		print ("Server has been created and your friends can join with the IP: " + myIp);
->>>>>>> c714d3a18687039477842b00c804b86831c13bca
 
         server = true;
 

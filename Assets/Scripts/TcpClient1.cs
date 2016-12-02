@@ -26,16 +26,17 @@ public class TcpClient1 : MonoBehaviour {
 
 	public GameObject inputField;
 
-	public GameObject player1;
-	public GameObject player2;
-	public GameObject player3;
-	public GameObject player4;
+	static GameObject player1;
+	static GameObject player2;
+	static GameObject player3;
+	static GameObject player4;
 
  
 
 
 	// Use this for initialization
 	void Start () {
+        DontDestroyOnLoad(this.gameObject);
 		player1 = GameObject.Find ("Player1");
 		player2 = GameObject.Find ("Player2");
 		player3 = GameObject.Find ("Player3");
@@ -58,6 +59,8 @@ public class TcpClient1 : MonoBehaviour {
         {
 
         }
+
+
 
         if (SceneManager.GetActiveScene().name == "Lobby") {
             
@@ -90,7 +93,7 @@ public class TcpClient1 : MonoBehaviour {
 
 	public void connectToServer() {
 
-		if (SceneManager.GetActiveScene ().name == "Join") {
+        if (SceneManager.GetActiveScene ().name == "Join") {
 			login = inputField.GetComponent<InputField> ().text;
 
 			client = new TcpClient (login, port);
@@ -105,8 +108,8 @@ public class TcpClient1 : MonoBehaviour {
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
-
-			client = new TcpClient ("localhost", port);
+ 
+			client = new TcpClient ("172.20.10.4", port);
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
 			reader = new StreamReader (stream, Encoding.ASCII);
