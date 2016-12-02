@@ -14,8 +14,10 @@ public class TcpClient1 : MonoBehaviour {
 	string login;
 	string lineReceived;
     int sumbreror1, sumbreror2, sumbreror3, sumbreror4;
-    int myPlayerNumber; 
-	TcpClient client;
+    int myPlayerNumber;
+    int diceNum;
+
+    TcpClient client;
 	NetworkStream stream;
 	StreamWriter writer;
 	StreamReader reader;
@@ -56,7 +58,14 @@ public class TcpClient1 : MonoBehaviour {
 		}
         if (SceneManager.GetActiveScene().name == "Game")
         {
+          if( lineReceived == "Your turn")
+            {
+                rollDice();
+            }
+          else if(lineReceived =="")
+            {
 
+            }
         }
 
         if (SceneManager.GetActiveScene().name == "Lobby") {
@@ -87,8 +96,13 @@ public class TcpClient1 : MonoBehaviour {
 
 	}
 		
+    public void rollDice()
+    {
+        System.Random rand = new System.Random();
+        diceNum = rand.Next(1, 7);
+    }
 
-	public void connectToServer() {
+    public void connectToServer() {
 
 		if (SceneManager.GetActiveScene ().name == "Join") {
 			login = inputField.GetComponent<InputField> ().text;
