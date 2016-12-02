@@ -178,12 +178,12 @@ public class TcpThreadServer : MonoBehaviour
                 if (clientThread.Name == "player3")
                 {
                     player3Image = true;
-                    writer.WriteLine(playerCount);
+                    writer.WriteLine("Welcome player " + playerCount);
                 }
                 if (clientThread.Name == "player4")
                 {
                     player4Image = true;
-                    writer.WriteLine(playerCount);
+                    writer.WriteLine("Welcome player " + playerCount);
                 }
             }
 
