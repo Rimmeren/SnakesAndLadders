@@ -15,8 +15,12 @@ public class TcpClient1 : MonoBehaviour {
 	string login;
 	string lineReceived;
     int sumbreror1, sumbreror2, sumbreror3, sumbreror4;
-    int myPlayerNumber; 
-	TcpClient client;
+    int myPlayerNumber;
+    int playerNum;
+    int diceNum;
+    float[] xPoses = { 17f, 13.3f, 9.6f, 5.9f, 2.2f, -1.5f, -5.2f, -8.9f, -12.6f, -16.3f, -16.3f, -12.6f, -8.9f, -5.2f, -1.5f, 2.2f, 5.9f, 9.6f, 13.3f, 17f, 17f, 13.3f, 9.6f, 5.9f, 2.2f, -1.5f, -5.2f, -8.9f, -12.6f, -16.3f, -16.3f, -12.6f, -8.9f, -5.2f, -1.5f, 2.2f, 5.9f, 9.6f, 13.3f, 17f, 17f, 13.3f, 9.6f, 5.9f, 2.2f, -1.5f, -5.2f, -8.9f, -12.6f, -16.3f };
+    float[] yPoses = { -6f, -6f, -6f, -6f, -6f, -6f, -6f, -6f, -6f, -6f, -2f, -2f, -2f, -2f, -2f, -2f, -2f, -2f, -2f, -2f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 5.3f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f, 8.7f };
+    TcpClient client;
 	NetworkStream stream;
 	StreamWriter writer;
 	StreamReader reader;
@@ -58,7 +62,45 @@ public class TcpClient1 : MonoBehaviour {
 		}
         if (SceneManager.GetActiveScene().name == "Game")
         {
+          if( lineReceived == "Your turn")
+            {
+                rollDice();
+            }
+          else 
+            {
+                playerNum = Int32.Parse(lineReceived.Split('-')[0]);
+                diceNum = Int32.Parse(lineReceived.Split('-')[1]);
+                if (playerNum == 1)
+                {
+                    sumbreror1 += diceNum;
 
+                    player1.transform.position = new Vector3(xPoses[sumbreror1], yPoses[sumbreror1]);
+                }
+
+                if (playerNum == 2)
+                {
+                    sumbreror2 += diceNum;
+
+                    player2.transform.position = new Vector3(xPoses[sumbreror2], yPoses[sumbreror1]);
+                }
+
+
+                if (playerNum == 3)
+                {
+                    sumbreror3 += diceNum;
+
+                    player3.transform.position = new Vector3(xPoses[sumbreror3], yPoses[sumbreror3]);
+                }
+
+
+                if (playerNum == 4)
+                {
+                    sumbreror4 += diceNum;
+
+                    player4.transform.position = new Vector3(xPoses[sumbreror4], yPoses[sumbreror4]);
+                }
+
+            }
         }
 
 
@@ -85,14 +127,16 @@ public class TcpClient1 : MonoBehaviour {
 
 		}
 
-		if (SceneManager.GetActiveScene ().name == "Game") {
-
-		}
 
 	}
 		
+    public void rollDice()
+    {
+        System.Random rand = new System.Random();
+        diceNum = rand.Next(1, 7);
+    }
 
-	public void connectToServer() {
+    public void connectToServer() {
 
         if (SceneManager.GetActiveScene ().name == "Join") {
 			login = inputField.GetComponent<InputField> ().text;
