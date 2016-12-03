@@ -251,10 +251,8 @@ public class TcpThreadServer : MonoBehaviour
 					oldMsg = msg;
 				}
 					
-				if (reader.Peek () > -1) {
-					
-						receivedFromClient = reader.ReadLine ();
-
+				if (listening == true) {
+					receivedFromClient = reader.ReadLine ();
 					print (receivedFromClient);
 					Thread.Sleep (sleepTime);
 				}
