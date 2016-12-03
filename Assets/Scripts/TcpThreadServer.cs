@@ -177,8 +177,11 @@ public class TcpThreadServer : MonoBehaviour
 			string msg = "";
 			
 			while (true) {
-				if (create == true && clientConnected == false) {
+				if (clientConnected == true) {
+					msg = "status:" + playerCount;
+				}
 
+				if (create == true && clientConnected == false) {
 					if (clientThread.Name == "player1") {
 						player1Image = true;
 						msg = ("Welcome player " + playerCount);
@@ -198,13 +201,6 @@ public class TcpThreadServer : MonoBehaviour
 					}
 					clientConnected = true;
 				}
-
-				if (clientConnected == true) {
-					msg = "status:" + playerCount;
-				}
-
-
-					
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
 					oldMsg = msg;
