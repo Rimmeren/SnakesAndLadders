@@ -173,8 +173,8 @@ public class TcpThreadServer : MonoBehaviour
 		{
 			bool clientConnected = false;
 			//Mads
-			string oldMsg;
-			string msg;
+			string oldMsg = "OLD";
+			string msg = "";
 			
 			while (true) {
 				if (create == true && clientConnected == false) {
@@ -196,7 +196,7 @@ public class TcpThreadServer : MonoBehaviour
 						player4Image = true;
 						msg = ("Welcome player " + playerCount);
 					}
-					clientConnected == true;
+					clientConnected = true;
 				}
 
 				if (clientConnected == true) {
