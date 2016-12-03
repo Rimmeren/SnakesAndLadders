@@ -175,34 +175,35 @@ public class TcpThreadServer : MonoBehaviour
 			string msg = "Test";
 
 			while (true) {
-
+				Thread.Sleep (50);
 					
 				if (create == true) {
+					print ("Inside create if");
 					
 					msg = "status: " + playerCount;
-					Thread.Sleep (1);
+					Thread.Sleep (10);
 
 					if (clientThread.Name == "player1" && clientConnected == false) {
 						player1Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (1);
+						Thread.Sleep (10);
 					}
 					if (clientThread.Name == "player2" && clientConnected == false) {
 						player2Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (1);
+						Thread.Sleep (10);
 
 					}
 					if (clientThread.Name == "player3" && clientConnected == false) {
 						player3Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (1);
+						Thread.Sleep (10);
 
 					}
 					if (clientThread.Name == "player4" && clientConnected == false) {
 						player4Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (1);
+						Thread.Sleep (10);
 
 					}
 
@@ -211,13 +212,8 @@ public class TcpThreadServer : MonoBehaviour
 				}
 
 				if (game == true) {
-					Thread.Sleep (20);
-					if (letsPlay == false) {
-						writer.WriteLine ("Let's play");
-						Thread.Sleep (20);
-						letsPlay == true;
-					}
-						
+					Thread.Sleep (50);
+
 					if (turn == 2) {
 						msg = ("Your turn:" + turn);
 					}
@@ -225,9 +221,10 @@ public class TcpThreadServer : MonoBehaviour
 					//print (reader.ReadLine ());
 				}
 
+
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
-					Thread.Sleep (1);
+					Thread.Sleep (50);
 					oldMsg = msg;
 				}
 			}

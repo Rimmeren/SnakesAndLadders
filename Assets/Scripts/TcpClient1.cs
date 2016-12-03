@@ -168,7 +168,7 @@ public class TcpClient1 : MonoBehaviour
 		}
 
 		//When server tells us to play, we change the scene to Game
-		if (lineReceived == "Let's play") {
+		if (lineReceived.IndexOf("Your turn") != -1) {
 			SceneManager.LoadScene ("Game");
 		}
 
@@ -313,11 +313,14 @@ public class TcpClient1 : MonoBehaviour
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
 
-			client = new TcpClient ("172.20.10.3", port);
+			client = new TcpClient ("172.20.10.2", port);
 
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
 			reader = new StreamReader (stream, Encoding.ASCII);
+
+			readThread = new Thread (new ThreadStart (ReadData));
+			readThread.Start ();
 		}
 	}
 
