@@ -200,6 +200,7 @@ public class TcpThreadServer : MonoBehaviour
 
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
+					Thread.Sleep (500);
 					oldMsg = msg;
 				}
 			}
