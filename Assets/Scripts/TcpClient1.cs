@@ -214,15 +214,8 @@ public class TcpClient1 : MonoBehaviour
 			}
 		}
 
-
-
-		if (SceneManager.GetActiveScene ().name == "Lobby") {
+		if (SceneManager.GetActiveScene ().name == "Create") {
 			player1 = GameObject.Find ("Player1");
-			player2 = GameObject.Find ("Player2");
-			player3 = GameObject.Find ("Player3");
-			player4 = GameObject.Find ("Player4");
-
-
 
 			if (lineReceived == "Welcome player 1") {
 				player1.GetComponent<SpriteRenderer> ().enabled = true;
@@ -232,6 +225,14 @@ public class TcpClient1 : MonoBehaviour
 					iHaveJoined = true;
 				}
 			}
+
+		}
+
+		if (SceneManager.GetActiveScene ().name == "Lobby") {
+			player2 = GameObject.Find ("Player2");
+			player3 = GameObject.Find ("Player3");
+			player4 = GameObject.Find ("Player4");
+
 
 			if (lineReceived == "Welcome player 2") {
 				player2.GetComponent<SpriteRenderer> ().enabled = true;
