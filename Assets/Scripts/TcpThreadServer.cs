@@ -181,29 +181,29 @@ public class TcpThreadServer : MonoBehaviour
 					print ("Inside create if");
 					
 					msg = "status: " + playerCount;
-					Thread.Sleep (10);
+					Thread.Sleep (50);
 
 					if (clientThread.Name == "player1" && clientConnected == false) {
 						player1Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (10);
+						Thread.Sleep (50);
 					}
 					if (clientThread.Name == "player2" && clientConnected == false) {
 						player2Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (10);
+						Thread.Sleep (50);
 
 					}
 					if (clientThread.Name == "player3" && clientConnected == false) {
 						player3Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (10);
+						Thread.Sleep (50);
 
 					}
 					if (clientThread.Name == "player4" && clientConnected == false) {
 						player4Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (10);
+						Thread.Sleep (50);
 
 					}
 
