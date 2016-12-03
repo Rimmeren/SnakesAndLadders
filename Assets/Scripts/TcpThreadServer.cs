@@ -37,6 +37,7 @@ public class TcpThreadServer : MonoBehaviour
 	bool server = false;
 	static bool game = false;
 	static bool create = false;
+	static bool gameScene = false;
 
 
 	// Use this for initialization
@@ -109,6 +110,11 @@ public class TcpThreadServer : MonoBehaviour
 
 	}
 
+	public void gameSceneEnable ()
+	{
+		gameScene = true;
+	}
+
 
 
 
@@ -132,7 +138,7 @@ public class TcpThreadServer : MonoBehaviour
         
 		Thread clientThread;
 
-
+		int turn = 2;
 
 
 		public HandleClients (TcpClient client)
@@ -170,71 +176,61 @@ public class TcpThreadServer : MonoBehaviour
 			while (true) {
 
 					
-				if (create == true && clientConnected == false) {
+				if (create == true) {
+					
+					msg = "status: " + playerCount;
+					Thread.Sleep (1);
+
 					if (clientThread.Name == "player1" && clientConnected == false) {
 						player1Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (500);
+						Thread.Sleep (1);
 					}
 					if (clientThread.Name == "player2" && clientConnected == false) {
 						player2Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (500);
+						Thread.Sleep (1);
 
 					}
 					if (clientThread.Name == "player3" && clientConnected == false) {
 						player3Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (500);
+						Thread.Sleep (1);
 
 					}
 					if (clientThread.Name == "player4" && clientConnected == false) {
 						player4Image = true;
 						writer.WriteLine ("Welcome player " + playerCount);
-						Thread.Sleep (500);
+						Thread.Sleep (1);
 
 					}
 
 					clientConnected = true;
-					
+
 				}
+
+
 
 				if (game == true) {
-					
-				}
+					if (gameScene == true) {
+						writer.WriteLine ("Let's play");
+						gameScene = false;
+					}
+					if (turn == 2) {
+						msg = ("Your turn:" + turn);
+					}
 
-				msg = "status: " + playerCount;
+					//print (reader.ReadLine ());
+				}
 
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
-					Thread.Sleep (500);
+					Thread.Sleep (1);
 					oldMsg = msg;
 				}
-
-
-
-
-
-				
-
 			}
-
-
-
-			
-
-			/*
-			foreach (object obje in players) {
-				print (players.Count);
-				stream = (NetworkStream)obje;
-
-				writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
-
-				writer.WriteLine ("Welcome player " + 1);
-				print ("test");
-
-			}*/
 		}
 	}
-
 }
+
+
