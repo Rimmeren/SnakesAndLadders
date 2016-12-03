@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse (GetServerIP());
+	IPAddress myIp = IPAddress.Parse (GetServerIP ());
 
 	//Server and Client connection
 	TcpListener listener;
@@ -47,23 +47,11 @@ public class TcpThreadServer : MonoBehaviour
 		player2 = GameObject.Find ("Player2");
 		player3 = GameObject.Find ("Player3");
 		player4 = GameObject.Find ("Player4");
-        print(GetServerIP());
-}
-    public static string GetServerIP()
-    {
-        IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-
-        foreach (IPAddress address in ipHostInfo.AddressList)
-        {
-            if (address.AddressFamily == AddressFamily.InterNetwork)
-                return address.ToString();
-        }
-
-        return string.Empty;
-    }
-
-    // Update is called once per frame
-    void Update ()
+		print (GetServerIP ());
+	}
+		
+	// Update is called once per frame
+	void Update ()
 	{
 
 		if (server == true) {
@@ -79,14 +67,12 @@ public class TcpThreadServer : MonoBehaviour
 			if (player4Image)
 				player4.GetComponent<SpriteRenderer> ().enabled = true;
 
+
 			if (listener.Pending () == true) {
 				client = listener.AcceptTcpClient ();
-
 				HandleClients client1 = new HandleClients (client);
 				client1.startClient ();
-
 			}
-
 
 		}
 		if (SceneManager.GetActiveScene ().name == "Game") {
@@ -123,6 +109,18 @@ public class TcpThreadServer : MonoBehaviour
 
 	}
 
+	public static string GetServerIP ()
+	{
+		IPHostEntry ipHostInfo = Dns.GetHostEntry (Dns.GetHostName ());
+
+		foreach (IPAddress address in ipHostInfo.AddressList) {
+			if (address.AddressFamily == AddressFamily.InterNetwork)
+				return address.ToString ();
+		}
+
+		return string.Empty;
+	}
+
 
 	class HandleClients
 	{
@@ -137,79 +135,94 @@ public class TcpThreadServer : MonoBehaviour
 
 		static ArrayList players = new ArrayList ();
 
-		StreamWriter writer;
-		StreamReader reader;
+
+		static StreamWriter writer;
+		static StreamReader reader;
         
 		Thread clientThread;
 
+
+		//Mads
+		bool clientConnected;
+		string oldMsg;
+		string msg;
+
 		public HandleClients (TcpClient client)
 		{
+			oldMsg = "";
+			msg = "";
 			this.randomClient = client;
+			clientConnected = false;
 
 			stream = client.GetStream ();
 
-			players.Add (stream);
-
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
 			reader = new StreamReader (stream, Encoding.ASCII);
-
 		}
 
 		public void startClient ()
 		{
 			clientThread = new Thread (new ThreadStart (playGame));
 			playerCount++;
+			msg = "Status:" + playerCount;
 
 			clientThread.Name = "player" + playerCount;
-
+			print (clientThread.Name);
 			clientThread.Start ();
 
 			print ("User with IP: " + ((IPEndPoint)randomClient.Client.RemoteEndPoint).Address.ToString () + " has joined the game as " + clientThread.Name);
 		}
 
+
 		void playGame ()
 		{
 			
-			if (create == true) {
+			while (true) {
+				if (create == true) {
 
-				if (clientThread.Name == "player1") {
-					
-					player1Image = true;
-					writer.WriteLine ("Welcome player " + playerCount);
+					if (clientThread.Name == "player1") {
+						player1Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+					}
+					if (clientThread.Name == "player2") {
+						player2Image = true;
 
+						writer.WriteLine ("Welcome player " + playerCount);
+
+					}
+					if (clientThread.Name == "player3") {
+						player3Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+					}
+					if (clientThread.Name == "player4") {
+						player4Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+					}
+
+					create = false;
 				}
-				if (clientThread.Name == "player2") {
-					player2Image = true;
 
-					writer.WriteLine ("Welcome player " + playerCount);
 
-				}
-				if (clientThread.Name == "player3") {
-					player3Image = true;
-					writer.WriteLine ("Welcome player " + playerCount);
-				}
-				if (clientThread.Name == "player4") {
-					player4Image = true;
-					writer.WriteLine ("Welcome player " + playerCount);
+				if (msg != oldMsg) {
+					writer.WriteLine (msg);
+					oldMsg = msg;
 				}
 
-				foreach (object obje in players) {
-					print (players.Count);
-					stream = (NetworkStream)obje;
-
-					writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
-
-						writer.WriteLine ("Welcome player " + 1);
-						print ("test");
-
-
-
-				}
 
 
 			}
+			/*
+			foreach (object obje in players) {
+				print (players.Count);
+				stream = (NetworkStream)obje;
 
+				writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };
+
+				writer.WriteLine ("Welcome player " + 1);
+				print ("test");
+				*/
+			}
 		}
-
 	}
+
 }
