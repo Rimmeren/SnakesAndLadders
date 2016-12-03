@@ -286,7 +286,7 @@ public class TcpClient1 : MonoBehaviour
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
 
-			client = new TcpClient ("172.20.10.4", port);
+			client = new TcpClient ("172.20.10.3", port);
 
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };

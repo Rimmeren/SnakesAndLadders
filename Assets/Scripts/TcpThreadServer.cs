@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse ("172.20.10.4");
+	IPAddress myIp = IPAddress.Parse ("172.20.10.3");
 
 	//Server and Client connection
 	TcpListener listener;
@@ -164,40 +164,40 @@ public class TcpThreadServer : MonoBehaviour
 			bool clientConnected = false;
 			//Mads
 			string oldMsg = "OLD";
-			string msg = "";
+			string msg = "Test";
+
+			if (create == true) {
+				if (clientThread.Name == "player1" && clientConnected == false) {
+					player1Image = true;
+					writer.WriteLine("Welcome player " + playerCount);
+					Thread.Sleep (0.5);
+				}
+				if (clientThread.Name == "player2" && clientConnected == false) {
+					player2Image = true;
+					writer.WriteLine("Welcome player " + playerCount);
+					Thread.Sleep (0.5);
+	
+				}
+				if (clientThread.Name == "player3" && clientConnected == false) {
+					player3Image = true;
+					writer.WriteLine("Welcome player " + playerCount);
+					Thread.Sleep (0.5);
+
+				}
+				if (clientThread.Name == "player4" && clientConnected == false) {
+					player4Image = true;
+					writer.WriteLine("Welcome player " + playerCount);
+					Thread.Sleep (0.5);
+
+				}
+
+
+			}
 			
 			while (true) {
-				if (clientConnected == true) {
-					msg = "status:" + playerCount;
-				}
+				
+				msg = "status: " + playerCount;
 
-				if (create == true && clientConnected == false) {
-					if (clientThread.Name == "player1") {
-						player1Image = true;
-						msg = ("Welcome player " + playerCount);
-                        clientConnected = true;
-                    }
-					if (clientThread.Name == "player2") {
-						player2Image = true;
-						msg = ("Welcome player " + playerCount);
-                        clientConnected = true;
-
-                    }
-					if (clientThread.Name == "player3") {
-						player3Image = true;
-						msg = ("Welcome player " + playerCount);
-                        clientConnected = true;
-                    }
-					if (clientThread.Name == "player4") {
-						player4Image = true;
-						msg = ("Welcome player " + playerCount);
-                        clientConnected = true;
-                    }
-                    msg = "andet end haps";
-					writer.WriteLine ("We are in create stuff.");
-                    print(clientThread.Name);
-					//clientConnected = true;
-				}
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
 					oldMsg = msg;
