@@ -137,12 +137,15 @@ public class TcpThreadServer : MonoBehaviour
 		StreamReader reader;
         
 		Thread clientThread;
+		Thread readThread;
 
 		int turn = 1;
 
 		bool letsPlay = false;
 
 		string receivedFromClient;
+
+		string lineReceivedFromClient = "";
 
 
 		public HandleClients (TcpClient client)
@@ -174,6 +177,8 @@ public class TcpThreadServer : MonoBehaviour
 			bool clientConnected = false;
 			bool listening = false;
 
+			readThread = new Thread (new ThreadStart (ReadData));
+			readThread.Start ();
 
 			string oldMsg = "OLD";
 			string msg = "Test";
@@ -257,6 +262,12 @@ public class TcpThreadServer : MonoBehaviour
 					Thread.Sleep (sleepTime);
 				}
 			}
+		}
+
+		void ReadData ()
+		{
+			while (true)
+				lineReceivedFromClient = reader.ReadLine ();
 		}
 	}
 }

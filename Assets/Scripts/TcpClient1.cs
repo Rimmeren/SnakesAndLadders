@@ -188,7 +188,7 @@ public class TcpClient1 : MonoBehaviour
 				}
 			}
 			//Else the server message is about the other players, and we go to this code.
-			if (lineReceived.IndexOf ("-") != -1) { 
+			/*if (lineReceived.IndexOf ("-") != -1) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
 				diceNum = Int32.Parse (lineReceived.Split ('-') [1]);
 				if (playerNum == 1) {
@@ -211,7 +211,7 @@ public class TcpClient1 : MonoBehaviour
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 
-			}
+			}*/
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
