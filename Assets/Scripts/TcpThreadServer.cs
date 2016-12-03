@@ -43,16 +43,16 @@ public class TcpThreadServer : MonoBehaviour
 	void Start ()
 	{
 		DontDestroyOnLoad (this.gameObject);
-		player1 = GameObject.Find ("Player1");
-		player2 = GameObject.Find ("Player2");
-		player3 = GameObject.Find ("Player3");
-		player4 = GameObject.Find ("Player4");
 		print (myIp);
 	}
 		
 	// Update is called once per frame
 	void Update ()
 	{
+		player1 = GameObject.Find ("Player1");
+		player2 = GameObject.Find ("Player2");
+		player3 = GameObject.Find ("Player3");
+		player4 = GameObject.Find ("Player4");
 
 		if (server == true) {
 			if (player1Image)
@@ -166,36 +166,43 @@ public class TcpThreadServer : MonoBehaviour
 			string oldMsg = "OLD";
 			string msg = "Test";
 
-			if (create == true) {
-				if (clientThread.Name == "player1" && clientConnected == false) {
-					player1Image = true;
-					writer.WriteLine("Welcome player " + playerCount);
-					Thread.Sleep (500);
-				}
-				if (clientThread.Name == "player2" && clientConnected == false) {
-					player2Image = true;
-					writer.WriteLine("Welcome player " + playerCount);
-					Thread.Sleep (500);
 	
-				}
-				if (clientThread.Name == "player3" && clientConnected == false) {
-					player3Image = true;
-					writer.WriteLine("Welcome player " + playerCount);
-					Thread.Sleep (500);
-
-				}
-				if (clientThread.Name == "player4" && clientConnected == false) {
-					player4Image = true;
-					writer.WriteLine("Welcome player " + playerCount);
-					Thread.Sleep (500);
-
-				}
-
-
-			}
-			
 			while (true) {
-				
+
+					
+				if (create == true && clientConnected == false) {
+					if (clientThread.Name == "player1" && clientConnected == false) {
+						player1Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+						Thread.Sleep (500);
+					}
+					if (clientThread.Name == "player2" && clientConnected == false) {
+						player2Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+						Thread.Sleep (500);
+
+					}
+					if (clientThread.Name == "player3" && clientConnected == false) {
+						player3Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+						Thread.Sleep (500);
+
+					}
+					if (clientThread.Name == "player4" && clientConnected == false) {
+						player4Image = true;
+						writer.WriteLine ("Welcome player " + playerCount);
+						Thread.Sleep (500);
+
+					}
+
+					clientConnected = true;
+					
+				}
+
+				if (game == true) {
+					
+				}
+
 				msg = "status: " + playerCount;
 
 				if (msg != oldMsg) {
@@ -203,7 +210,19 @@ public class TcpThreadServer : MonoBehaviour
 					Thread.Sleep (500);
 					oldMsg = msg;
 				}
+
+
+
+
+
+				
+
 			}
+
+
+
+			
+
 			/*
 			foreach (object obje in players) {
 				print (players.Count);
