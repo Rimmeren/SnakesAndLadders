@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse ("172.20.10.3");
+	IPAddress myIp = IPAddress.Parse ("172.20.10.2");
 
 	//Server and Client connection
 	TcpListener listener;
@@ -140,6 +140,8 @@ public class TcpThreadServer : MonoBehaviour
 
 		int turn = 2;
 
+		bool letsPlay = false;
+
 
 		public HandleClients (TcpClient client)
 		{
@@ -172,7 +174,6 @@ public class TcpThreadServer : MonoBehaviour
 			string oldMsg = "OLD";
 			string msg = "Test";
 
-	
 			while (true) {
 
 					
@@ -209,13 +210,14 @@ public class TcpThreadServer : MonoBehaviour
 
 				}
 
-
-
 				if (game == true) {
-					if (gameScene == true) {
+					Thread.Sleep (20);
+					if (letsPlay == false) {
 						writer.WriteLine ("Let's play");
-						gameScene = false;
+						Thread.Sleep (20);
+						letsPlay == true;
 					}
+						
 					if (turn == 2) {
 						msg = ("Your turn:" + turn);
 					}

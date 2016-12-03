@@ -138,13 +138,12 @@ public class TcpClient1 : MonoBehaviour
 	static GameObject player3;
 	static GameObject player4;
 
+	GameObject rollButton;
+
  
 	string lineReceived;
 	string oldLineReceived;
 	bool iHaveJoined;
-
-
-
 
 	// Use this for initialization
 	void Start ()
@@ -175,10 +174,16 @@ public class TcpClient1 : MonoBehaviour
 
 		//When the scene is Game
 		if (SceneManager.GetActiveScene ().name == "Game") {
+			rollButton = GameObject.Find ("Button");
+
+
 			//If the server tells me that it's my turn, then we run the (local) function to roll dice.
-			if (lineReceived == "Your turn") {
-				rollDice ();
-			} 
+			if (Int32.Parse(lineReceived.Split(':')[1]) == myPlayerNumber) {
+				Button rollBtn = rollButton.GetComponent<Button> ();
+				rollBtn.onClick.AddListener (rollDice);
+				writer.WriteLine ("Player" + myPlayerNumber + " rolled:" + diceNum);
+			}
+
 			//Else the server message is about the other players, and we go to this code.
 			else if (lineReceived.IndexOf ("-") != -1) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
@@ -282,8 +287,10 @@ public class TcpClient1 : MonoBehaviour
 
     public void rollDice ()
 	{
+
 		System.Random rand = new System.Random ();
 		diceNum = rand.Next (1, 7);
+		print ("Dice num: " + diceNum);
 	}
 
 	public void connectToServer ()
