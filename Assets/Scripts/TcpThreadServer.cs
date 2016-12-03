@@ -182,27 +182,24 @@ public class TcpThreadServer : MonoBehaviour
 
 					if (clientThread.Name == "player1") {
 						player1Image = true;
-						writer.WriteLine ("Welcome player " + playerCount);
+						msg = ("Welcome player " + playerCount);
 					}
 					if (clientThread.Name == "player2") {
 						player2Image = true;
 
-						writer.WriteLine ("Welcome player " + playerCount);
+						msg = ("Welcome player " + playerCount);
 
 					}
 					if (clientThread.Name == "player3") {
 						player3Image = true;
-						writer.WriteLine ("Welcome player " + playerCount);
+						msg = ("Welcome player " + playerCount);
 					}
 					if (clientThread.Name == "player4") {
 						player4Image = true;
-						writer.WriteLine ("Welcome player " + playerCount);
+						msg = ("Welcome player " + playerCount);
 					}
-
-					create = false;
 				}
-
-
+					
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
 					oldMsg = msg;
@@ -220,8 +217,8 @@ public class TcpThreadServer : MonoBehaviour
 
 				writer.WriteLine ("Welcome player " + 1);
 				print ("test");
-				*/
-			}
+
+			}*/
 		}
 	}
 
