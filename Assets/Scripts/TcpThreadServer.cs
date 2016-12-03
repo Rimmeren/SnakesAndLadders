@@ -128,6 +128,7 @@ public class TcpThreadServer : MonoBehaviour
 		TcpClient randomClient;
 
 		static int playerCount;
+		static int oldPlayerCount;
 
 		string readLine;
 
@@ -142,17 +143,11 @@ public class TcpThreadServer : MonoBehaviour
 		Thread clientThread;
 
 
-		//Mads
-		bool clientConnected;
-		string oldMsg;
-		string msg;
+
 
 		public HandleClients (TcpClient client)
 		{
-			oldMsg = "";
-			msg = "";
 			this.randomClient = client;
-			clientConnected = false;
 
 			stream = client.GetStream ();
 
@@ -163,8 +158,8 @@ public class TcpThreadServer : MonoBehaviour
 		public void startClient ()
 		{
 			clientThread = new Thread (new ThreadStart (playGame));
+			oldPlayerCount = playerCount;
 			playerCount++;
-			msg = "Status:" + playerCount;
 
 			clientThread.Name = "player" + playerCount;
 			print (clientThread.Name);
@@ -176,9 +171,13 @@ public class TcpThreadServer : MonoBehaviour
 
 		void playGame ()
 		{
+			bool clientConnected = false;
+			//Mads
+			string oldMsg;
+			string msg;
 			
 			while (true) {
-				if (create == true) {
+				if (create == true && clientConnected == false) {
 
 					if (clientThread.Name == "player1") {
 						player1Image = true;
@@ -186,7 +185,6 @@ public class TcpThreadServer : MonoBehaviour
 					}
 					if (clientThread.Name == "player2") {
 						player2Image = true;
-
 						msg = ("Welcome player " + playerCount);
 
 					}
@@ -198,7 +196,14 @@ public class TcpThreadServer : MonoBehaviour
 						player4Image = true;
 						msg = ("Welcome player " + playerCount);
 					}
+					clientConnected == true;
 				}
+
+				if (clientConnected == true) {
+					msg = "status:" + playerCount;
+				}
+
+
 					
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
