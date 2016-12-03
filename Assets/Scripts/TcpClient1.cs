@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.IO;
@@ -259,7 +260,20 @@ public class TcpClient1 : MonoBehaviour
 
 	}
 
-	public void rollDice ()
+    public static string GetServerIP()
+    {
+        IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+
+        foreach (IPAddress address in ipHostInfo.AddressList)
+        {
+            if (address.AddressFamily == AddressFamily.InterNetwork)
+                return address.ToString();
+        }
+
+        return string.Empty;
+    }
+
+    public void rollDice ()
 	{
 		System.Random rand = new System.Random ();
 		diceNum = rand.Next (1, 7);
@@ -285,7 +299,7 @@ public class TcpClient1 : MonoBehaviour
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
 
-			client = new TcpClient ("172.20.10.3", port);
+			client = new TcpClient (GetServerIP(), port);
 
 			stream = client.GetStream ();
 			writer = new StreamWriter (stream, Encoding.ASCII) { AutoFlush = true };

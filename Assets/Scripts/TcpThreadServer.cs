@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse ("172.20.10.3");
+	IPAddress myIp = IPAddress.Parse (GetServerIP());
 
 	//Server and Client connection
 	TcpListener listener;
@@ -47,11 +47,23 @@ public class TcpThreadServer : MonoBehaviour
 		player2 = GameObject.Find ("Player2");
 		player3 = GameObject.Find ("Player3");
 		player4 = GameObject.Find ("Player4");
+        print(GetServerIP());
+}
+    public static string GetServerIP()
+    {
+        IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 
-	}
+        foreach (IPAddress address in ipHostInfo.AddressList)
+        {
+            if (address.AddressFamily == AddressFamily.InterNetwork)
+                return address.ToString();
+        }
 
-	// Update is called once per frame
-	void Update ()
+        return string.Empty;
+    }
+
+    // Update is called once per frame
+    void Update ()
 	{
 
 		if (server == true) {
