@@ -140,14 +140,17 @@ public class TcpClient1 : MonoBehaviour
 
  
 	string lineReceived;
+	string oldLineReceived;
 	bool iHaveJoined;
+
+
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		
 		lineReceived = "";
+		oldLineReceived = "OLD";
 		iHaveJoined = false;
 		DontDestroyOnLoad (this.gameObject);
 
@@ -160,7 +163,10 @@ public class TcpClient1 : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		print (lineReceived);
+		if (lineReceived != oldLineReceived) {
+			print (lineReceived);
+			oldLineReceived = lineReceived;
+		}
 
 		//When server tells us to play, we change the scene to Game
 		if (lineReceived == "Let's play") {
@@ -210,16 +216,13 @@ public class TcpClient1 : MonoBehaviour
 			player3 = GameObject.Find ("Player3");
 			player4 = GameObject.Find ("Player4");
 
-			//This is where we get our player number
-			//myPlayerNumber = Int32.Parse(lineReceived);
-            
+
 
 			if (lineReceived == "Welcome player 1") {
 				player1.GetComponent<SpriteRenderer> ().enabled = true;
 				if (iHaveJoined == false) {
 					myPlayerNumber = 1;
 					print ("I am player: " + myPlayerNumber);
-					lineReceived = "haps";
 					iHaveJoined = true;
 				}
 			}
@@ -229,7 +232,6 @@ public class TcpClient1 : MonoBehaviour
 				if (iHaveJoined == false) {
 					myPlayerNumber = 2;
 					print ("I am player: " + myPlayerNumber);
-					lineReceived = "haps";
 					iHaveJoined = true;
 				}
 			}
@@ -239,7 +241,6 @@ public class TcpClient1 : MonoBehaviour
 				if (iHaveJoined == false) {
 					myPlayerNumber = 3;
 					print ("I am player: " + myPlayerNumber);
-					lineReceived = "haps";
 					iHaveJoined = true;
 				}
 			}
@@ -249,8 +250,27 @@ public class TcpClient1 : MonoBehaviour
 				if (iHaveJoined == false) {
 					myPlayerNumber = 4;
 					print ("I am player: " + myPlayerNumber);
-					lineReceived = "haps";
 					iHaveJoined = true;
+				}
+			}
+
+			int numOfPlayers;
+			if (lineReceived.IndexOf ("status:") != -1) {
+				numOfPlayers = Int32.Parse(lineReceived.Split (':') [1]);
+				if (numOfPlayers == 1) {
+					player1.GetComponent<SpriteRenderer> ().enabled = true;
+				} else if (numOfPlayers == 2) {
+					player1.GetComponent<SpriteRenderer> ().enabled = true;
+					player2.GetComponent<SpriteRenderer> ().enabled = true;
+				} else if (numOfPlayers == 3) {
+					player1.GetComponent<SpriteRenderer> ().enabled = true;
+					player2.GetComponent<SpriteRenderer> ().enabled = true;
+					player3.GetComponent<SpriteRenderer> ().enabled = true;
+				} else if (numOfPlayers == 4) {
+					player1.GetComponent<SpriteRenderer> ().enabled = true;
+					player2.GetComponent<SpriteRenderer> ().enabled = true;
+					player3.GetComponent<SpriteRenderer> ().enabled = true;
+					player4.GetComponent<SpriteRenderer> ().enabled = true;
 				}
 			}
 			
