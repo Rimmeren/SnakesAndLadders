@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse (GetServerIP ());
+	IPAddress myIp = IPAddress.Parse ("172.20.10.4");
 
 	//Server and Client connection
 	TcpListener listener;
@@ -47,7 +47,7 @@ public class TcpThreadServer : MonoBehaviour
 		player2 = GameObject.Find ("Player2");
 		player3 = GameObject.Find ("Player3");
 		player4 = GameObject.Find ("Player4");
-		print (GetServerIP ());
+		print (myIp);
 	}
 		
 	// Update is called once per frame
@@ -109,17 +109,7 @@ public class TcpThreadServer : MonoBehaviour
 
 	}
 
-	public static string GetServerIP ()
-	{
-		IPHostEntry ipHostInfo = Dns.GetHostEntry (Dns.GetHostName ());
 
-		foreach (IPAddress address in ipHostInfo.AddressList) {
-			if (address.AddressFamily == AddressFamily.InterNetwork)
-				return address.ToString ();
-		}
-
-		return string.Empty;
-	}
 
 
 	class HandleClients
@@ -137,8 +127,8 @@ public class TcpThreadServer : MonoBehaviour
 		static ArrayList players = new ArrayList ();
 
 
-		static StreamWriter writer;
-		static StreamReader reader;
+		StreamWriter writer;
+		StreamReader reader;
         
 		Thread clientThread;
 
@@ -162,7 +152,7 @@ public class TcpThreadServer : MonoBehaviour
 			playerCount++;
 
 			clientThread.Name = "player" + playerCount;
-			print (clientThread.Name);
+		
 			clientThread.Start ();
 
 			print ("User with IP: " + ((IPEndPoint)randomClient.Client.RemoteEndPoint).Address.ToString () + " has joined the game as " + clientThread.Name);
@@ -185,22 +175,28 @@ public class TcpThreadServer : MonoBehaviour
 					if (clientThread.Name == "player1") {
 						player1Image = true;
 						msg = ("Welcome player " + playerCount);
-					}
+                        clientConnected = true;
+                    }
 					if (clientThread.Name == "player2") {
 						player2Image = true;
 						msg = ("Welcome player " + playerCount);
+                        clientConnected = true;
 
-					}
+                    }
 					if (clientThread.Name == "player3") {
 						player3Image = true;
 						msg = ("Welcome player " + playerCount);
-					}
+                        clientConnected = true;
+                    }
 					if (clientThread.Name == "player4") {
 						player4Image = true;
 						msg = ("Welcome player " + playerCount);
-					}
+                        clientConnected = true;
+                    }
+                    msg = "andet end haps";
 					writer.WriteLine ("We are in create stuff.");
-					clientConnected = true;
+                    print(clientThread.Name);
+					//clientConnected = true;
 				}
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
