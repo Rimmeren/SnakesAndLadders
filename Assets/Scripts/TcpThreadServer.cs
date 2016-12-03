@@ -17,7 +17,7 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse ("172.20.10.3");
+	IPAddress myIp = IPAddress.Parse ("172.20.10.2");
 
 	//Server and Client connection
 	TcpListener listener;
@@ -139,13 +139,14 @@ public class TcpThreadServer : MonoBehaviour
 		Thread clientThread;
 		Thread readThread;
 
-		int turn = 1;
+		static int turn = 1;
+		string oldMsg = "OLD";
+		string msg = "Test";
 
 		bool letsPlay = false;
 
-		string receivedFromClient;
-
-		string lineReceivedFromClient = "";
+		static string receivedFromClient = "Høj";
+		static bool listener = false;
 
 
 		public HandleClients (TcpClient client)
@@ -175,15 +176,15 @@ public class TcpThreadServer : MonoBehaviour
 		void playGame ()
 		{
 			bool clientConnected = false;
-			bool listening = false;
 
 			readThread = new Thread (new ThreadStart (ReadData));
 			readThread.Start ();
 
-			string oldMsg = "OLD";
-			string msg = "Test";
+
 
 			string lastReceived = "";
+
+
 
 			while (true) {
 				Thread.Sleep (sleepTime);
@@ -222,52 +223,40 @@ public class TcpThreadServer : MonoBehaviour
 				}
 
 				if (game == true) {
-					//Thread.Sleep (sleepTime);
 					msg = "Your turn:" + turn;
 
-					if (turn == 1 && listening == false) {
-						msg = ("Your turn:" + turn);
-						listening = true;
-					}
-
-					else if (turn == 1) {
+					Thread.Sleep (sleepTime);
+					if (listener) {
 						msg = receivedFromClient;
-						listening = false;
-						turn = 2;
+
 					}
 
-					if (turn == 2 && listening == false) {
-						msg = ("Your turn:" + turn);
-						listening = true;
-					}
-
-					else if (turn == 2) {
-						msg = receivedFromClient;
-						listening = false;
-						turn = 1;
-					}
-			
+					
 				}
 
-
+				Thread.Sleep (sleepTime);
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
 					Thread.Sleep (sleepTime);
 					oldMsg = msg;
+					listener = false;
 				}
-					
-				if (listening == true) {
-					receivedFromClient = reader.ReadLine ();
-					print (receivedFromClient);
-					Thread.Sleep (sleepTime);
-				}
+
+
 			}
 		}
 
 		void ReadData ()
 		{
-			while (true)
-				lineReceivedFromClient = reader.ReadLine ();
+			while (true) {
+				receivedFromClient = reader.ReadLine ();
+				listener = true;
+				if (turn == playerCount) {
+					turn = 1;
+				} else  {
+					turn++;
+				}
+			}
 		}
 	}
 }
