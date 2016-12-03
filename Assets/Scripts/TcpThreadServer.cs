@@ -138,11 +138,11 @@ public class TcpThreadServer : MonoBehaviour
         
 		Thread clientThread;
 
-		int turn = 2;
+		int turn = 1;
 
 		bool letsPlay = false;
 
-		string recievedFromClient;
+		string receivedFromClient;
 
 
 		public HandleClients (TcpClient client)
@@ -174,8 +174,11 @@ public class TcpThreadServer : MonoBehaviour
 			bool clientConnected = false;
 			bool listening = false;
 
+
 			string oldMsg = "OLD";
 			string msg = "Test";
+
+			string lastReceived = "";
 
 			while (true) {
 				Thread.Sleep (sleepTime);
@@ -215,14 +218,15 @@ public class TcpThreadServer : MonoBehaviour
 
 				if (game == true) {
 					//Thread.Sleep (sleepTime);
-			
+					msg = "Your turn:" + turn;
+
 					if (turn == 1 && listening == false) {
 						msg = ("Your turn:" + turn);
 						listening = true;
 					}
 
 					else if (turn == 1) {
-						msg = recievedFromClient;
+						msg = receivedFromClient;
 						listening = false;
 						turn = 2;
 					}
@@ -233,7 +237,7 @@ public class TcpThreadServer : MonoBehaviour
 					}
 
 					else if (turn == 2) {
-						msg = recievedFromClient;
+						msg = receivedFromClient;
 						listening = false;
 						turn = 1;
 					}
@@ -246,10 +250,12 @@ public class TcpThreadServer : MonoBehaviour
 					Thread.Sleep (sleepTime);
 					oldMsg = msg;
 				}
+					
+				if (reader.Peek () > -1) {
+					
+						receivedFromClient = reader.ReadLine ();
 
-				if (listening == true) {
-					recievedFromClient = reader.ReadLine ();
-					print (recievedFromClient);
+					print (receivedFromClient);
 					Thread.Sleep (sleepTime);
 				}
 			}
