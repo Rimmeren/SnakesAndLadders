@@ -199,15 +199,13 @@ public class TcpThreadServer : MonoBehaviour
 						player4Image = true;
 						msg = ("Welcome player " + playerCount);
 					}
+					writer.WriteLine ("We are in create stuff.");
 					clientConnected = true;
 				}
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
 					oldMsg = msg;
 				}
-
-
-
 			}
 			/*
 			foreach (object obje in players) {
