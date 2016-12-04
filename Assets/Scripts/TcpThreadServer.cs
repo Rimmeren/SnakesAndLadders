@@ -220,23 +220,7 @@ public class TcpThreadServer : MonoBehaviour
 
 
 					if (listener == true) {
-						Thread.Sleep (sleepTime);
-						if (receivedFromClient.Split ('-') [0].IndexOf ("1") != -1) {
-							pl1 += Int32.Parse (receivedFromClient.Split ('-') [1]);
-							msg = "1-" + pl1;
-							print ("Beskeden vi sender: " + msg);
-						} else if (receivedFromClient.Split ('-') [0].IndexOf ("2") != -1) {
-							pl2 += Int32.Parse (receivedFromClient.Split ('-') [1]);
-							msg = "2-" + pl2;
-						} else if (receivedFromClient.Split ('-') [0].IndexOf ("3") != -1) {
-							pl3 += Int32.Parse (receivedFromClient.Split ('-') [1]);
-							msg = "3-" + pl3;
-						} else if (receivedFromClient.Split ('-') [0].IndexOf ("4") != -1) {
-							pl4 += Int32.Parse (receivedFromClient.Split ('-') [1]);
-							msg = "4-" + pl4;
-						}
-						//msg = receivedFromClient;
-
+						msg = receivedFromClient;
 					}
 
 					

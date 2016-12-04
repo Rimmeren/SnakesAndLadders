@@ -218,22 +218,22 @@ public class TcpClient1 : MonoBehaviour
 
 
 				if (playerNum == 1) {
-					sumbreror1 = playerPos;
+					sumbreror1 += playerPos;
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
 				}
 
 				if (playerNum == 2) {
-					sumbreror2 = playerPos;
+					sumbreror2 += playerPos;
 					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror2]);
 				}
 					
 				if (playerNum == 3) {
-					sumbreror3 = playerPos;
+					sumbreror3 += playerPos;
 					player3.transform.position = new Vector3 (xPoses [sumbreror3], yPoses [sumbreror3]);
 				}
 
 				if (playerNum == 4) {
-					sumbreror4 = playerPos;
+					sumbreror4 += playerPos;
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 				hasMoved = true;
