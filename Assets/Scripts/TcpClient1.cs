@@ -227,6 +227,8 @@ public class TcpClient1 : MonoBehaviour
 					if (sumbreror1 == 21) { sumbreror1 = 17; }
 					if (sumbreror1 == 43) { sumbreror1 = 37; }
 					if (sumbreror1 == 46) { sumbreror1 = 14; }
+					if(sumbreror1 == 49){ print ("You won"); }
+					if (sumbreror1 > 49) { sumbreror1 -= playerPos;}
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
 				}
 
@@ -239,6 +241,8 @@ public class TcpClient1 : MonoBehaviour
 					if (sumbreror2 == 21) { sumbreror2 = 17; }
 					if (sumbreror2 == 43) { sumbreror2 = 37; }
 					if (sumbreror2 == 46) { sumbreror2 = 14; }
+					if(sumbreror2 == 49){ print ("You won"); }
+					if (sumbreror2 > 49) { sumbreror2 -= playerPos;}
 					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror2]);
 				}
 					
@@ -251,6 +255,8 @@ public class TcpClient1 : MonoBehaviour
 					if (sumbreror3 == 21) { sumbreror3 = 17; }
 					if (sumbreror3 == 43) { sumbreror3 = 37; }
 					if (sumbreror3 == 46) { sumbreror3 = 14; }
+					if(sumbreror3 == 49){ print ("You won"); }
+					if (sumbreror3 > 49) { sumbreror3 -= playerPos;}
 					player3.transform.position = new Vector3 (xPoses [sumbreror3], yPoses [sumbreror3]);
 				}
 
@@ -263,6 +269,8 @@ public class TcpClient1 : MonoBehaviour
 					if (sumbreror4 == 21) { sumbreror4 = 17; }
 					if (sumbreror4 == 43) { sumbreror4 = 37; }
 					if (sumbreror4 == 46) { sumbreror4 = 14; }
+					if(sumbreror4 == 49){ print ("You won"); }
+					if (sumbreror4 > 49) { sumbreror4 -= playerPos;}
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 				hasMoved = true;
