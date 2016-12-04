@@ -137,7 +137,6 @@ public class TcpClient1 : MonoBehaviour
 	static GameObject player3;
 	static GameObject player4;
 
-	bool listener;
  
 	string lineReceived;
 	string oldLineReceived;
@@ -149,7 +148,6 @@ public class TcpClient1 : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		listener = true;
 
 		lineReceived = "";
 		oldLineReceived = "OLD";
@@ -217,6 +215,7 @@ public class TcpClient1 : MonoBehaviour
 			if (lineReceived.IndexOf ("-") != -1 && hasMoved == false) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
 				playerPos = Int32.Parse (lineReceived.Split ('-') [1]);
+				print (playerNum);
 
 
 				if (playerNum == 1) {
@@ -240,7 +239,7 @@ public class TcpClient1 : MonoBehaviour
 				}
 				hasMoved = true;
 			}
-			listener = true;
+
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
@@ -356,10 +355,8 @@ public class TcpClient1 : MonoBehaviour
 	void ReadData ()
 	{
 		while (true) {
-			if (listener == true) {
-				lineReceived = reader.ReadLine ();
-				listener = false;
-			}
+			lineReceived = reader.ReadLine ();
+
 		}
 	}
 
