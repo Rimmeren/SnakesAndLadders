@@ -215,8 +215,6 @@ public class TcpClient1 : MonoBehaviour
 			if (lineReceived.IndexOf ("-") != -1 && hasMoved == false) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
 				playerPos = Int32.Parse (lineReceived.Split ('-') [1]);
-				print (playerNum);
-
 
 				if (playerNum == 1) {
 					sumbreror1 += playerPos;
