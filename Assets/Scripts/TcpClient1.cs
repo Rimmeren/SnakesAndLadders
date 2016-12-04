@@ -220,21 +220,49 @@ public class TcpClient1 : MonoBehaviour
 
 				if (playerNum == 1) {
 					sumbreror1 += playerPos;
+					if (sumbreror1 == 3) { sumbreror1 = 16; }
+					if (sumbreror1 == 11) { sumbreror1 = 32; }
+					if (sumbreror1 == 23) { sumbreror1 = 35; }
+
+					if (sumbreror1 == 21) { sumbreror1 = 17; }
+					if (sumbreror1 == 43) { sumbreror1 = 37; }
+					if (sumbreror1 == 46) { sumbreror1 = 14; }
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
 				}
 
 				if (playerNum == 2) {
 					sumbreror2 += playerPos;
+					if (sumbreror2 == 3) { sumbreror2 = 16; }
+					if (sumbreror2 == 11) { sumbreror2 = 32; }
+					if (sumbreror2 == 23) { sumbreror2 = 35; }
+								 					
+					if (sumbreror2 == 21) { sumbreror2 = 17; }
+					if (sumbreror2 == 43) { sumbreror2 = 37; }
+					if (sumbreror2 == 46) { sumbreror2 = 14; }
 					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror2]);
 				}
 					
 				if (playerNum == 3) {
 					sumbreror3 += playerPos;
+					if (sumbreror3 == 3) { sumbreror3 = 16; }
+					if (sumbreror3 == 11) { sumbreror3 = 32; }
+					if (sumbreror3 == 23) { sumbreror3 = 35; }
+								 					
+					if (sumbreror3 == 21) { sumbreror3 = 17; }
+					if (sumbreror3 == 43) { sumbreror3 = 37; }
+					if (sumbreror3 == 46) { sumbreror3 = 14; }
 					player3.transform.position = new Vector3 (xPoses [sumbreror3], yPoses [sumbreror3]);
 				}
 
 				if (playerNum == 4) {
 					sumbreror4 += playerPos;
+					if (sumbreror4 == 3) { sumbreror4 = 16; }
+					if (sumbreror4 == 11) { sumbreror4 = 32; }
+					if (sumbreror4 == 23) { sumbreror4 = 35; }
+								 					
+					if (sumbreror4 == 21) { sumbreror4 = 17; }
+					if (sumbreror4 == 43) { sumbreror4 = 37; }
+					if (sumbreror4 == 46) { sumbreror4 = 14; }
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 				hasMoved = true;
