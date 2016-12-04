@@ -180,7 +180,6 @@ public class TcpThreadServer : MonoBehaviour
 			readThread.Start ();
 
 			while (true) {
-				Thread.Sleep (sleepTime);
 					
 				if (create == true) {
 					
@@ -225,11 +224,9 @@ public class TcpThreadServer : MonoBehaviour
 
 					
 				}
-
 				Thread.Sleep (sleepTime);
 				if (msg != oldMsg) {
 					writer.WriteLine (msg);
-					Thread.Sleep (sleepTime);
 					oldMsg = msg;
 					listener = false;
 				}

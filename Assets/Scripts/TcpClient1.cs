@@ -208,7 +208,7 @@ public class TcpClient1 : MonoBehaviour
 					print ("Vi mærker det");
 					rollDice ();
 					writer.WriteLine (myPlayerNumber + "-" + diceNum);
-					hasMoved = false;
+
 				}
 			}
 			//Else the server message is about the other players, and we go to this code.
@@ -356,7 +356,7 @@ public class TcpClient1 : MonoBehaviour
 	{
 		while (true) {
 			lineReceived = reader.ReadLine ();
-
+			hasMoved = false;
 		}
 	}
 
