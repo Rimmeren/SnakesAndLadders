@@ -141,6 +141,9 @@ public class TcpClient1 : MonoBehaviour
 	string lineReceived;
 	string oldLineReceived;
 	bool iHaveJoined;
+	bool hasMoved;
+
+	int numOfPlayers;
 
 	// Use this for initialization
 	void Start ()
@@ -154,6 +157,9 @@ public class TcpClient1 : MonoBehaviour
 		sumbreror2 = 0;
 		sumbreror3 = 0;
 		sumbreror4 = 0;
+
+		numOfPlayers = 0;
+
 	}
 
 	// Update is called once per frame
@@ -179,18 +185,37 @@ public class TcpClient1 : MonoBehaviour
 
 		//When the scene is Game
 		if (SceneManager.GetActiveScene ().name == "Game") {
+			if (numOfPlayers == 1) {
+				player1.GetComponent<SpriteRenderer> ().enabled = true;
+			} else if (numOfPlayers == 2) {
+				player1.GetComponent<SpriteRenderer> ().enabled = true;
+				player2.GetComponent<SpriteRenderer> ().enabled = true;
+			} else if (numOfPlayers == 3) {
+				player1.GetComponent<SpriteRenderer> ().enabled = true;
+				player2.GetComponent<SpriteRenderer> ().enabled = true;
+				player3.GetComponent<SpriteRenderer> ().enabled = true;
+			} else if (numOfPlayers == 4) {
+				player1.GetComponent<SpriteRenderer> ().enabled = true;
+				player2.GetComponent<SpriteRenderer> ().enabled = true;
+				player3.GetComponent<SpriteRenderer> ().enabled = true;
+				player4.GetComponent<SpriteRenderer> ().enabled = true;
+			}
+
 			if (Input.GetKeyUp ("space")) {
 				//If the server tells me that it's my turn, then we run the (local) function to roll dice.
-				if (Int32.Parse (lineReceived.Split (':') [1]) == myPlayerNumber) {
+				if (Int32.Parse (lineReceived.Split ('-') [1]) == myPlayerNumber) {
 					print ("Vi mærker det");
 					rollDice ();
-					writer.WriteLine (myPlayerNumber + ":" + diceNum);
+					writer.WriteLine (myPlayerNumber + "-" + diceNum);
+					hasMoved = false;
 				}
 			}
 			//Else the server message is about the other players, and we go to this code.
-			/*if (lineReceived.IndexOf ("-") != -1) { 
+			if (lineReceived.IndexOf ("-") != -1 && hasMoved == false) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
 				diceNum = Int32.Parse (lineReceived.Split ('-') [1]);
+
+
 				if (playerNum == 1) {
 					sumbreror1 += diceNum;
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
@@ -198,7 +223,7 @@ public class TcpClient1 : MonoBehaviour
 
 				if (playerNum == 2) {
 					sumbreror2 += diceNum;
-					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror1]);
+					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror2]);
 				}
 					
 				if (playerNum == 3) {
@@ -210,8 +235,8 @@ public class TcpClient1 : MonoBehaviour
 					sumbreror4 += diceNum;
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
-
-			}*/
+				hasMoved = true;
+			}
 		}
 
 		if (SceneManager.GetActiveScene ().name == "Create") {
@@ -261,7 +286,7 @@ public class TcpClient1 : MonoBehaviour
 				}
 			}
 
-			int numOfPlayers;
+
 			if (lineReceived.IndexOf ("status:") != -1) {
 				numOfPlayers = Int32.Parse (lineReceived.Split (':') [1]);
 				if (numOfPlayers == 1) {
