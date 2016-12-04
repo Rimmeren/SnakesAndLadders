@@ -124,13 +124,11 @@ public class TcpThreadServer : MonoBehaviour
 		TcpClient randomClient;
 
 		static int playerCount;
-		static int oldPlayerCount;
 
 		string readLine;
 
 		private NetworkStream stream;
 
-		static ArrayList players = new ArrayList ();
 
 
 		StreamWriter writer;
@@ -143,10 +141,11 @@ public class TcpThreadServer : MonoBehaviour
 		string oldMsg = "OLD";
 		string msg = "Test";
 
-		bool letsPlay = false;
 
 		static string receivedFromClient = "Høj";
 		static bool listener = false;
+
+		static int pl1, pl2, pl3, pl4;
 
 
 		public HandleClients (TcpClient client)
@@ -162,7 +161,6 @@ public class TcpThreadServer : MonoBehaviour
 		public void startClient ()
 		{
 			clientThread = new Thread (new ThreadStart (playGame));
-			oldPlayerCount = playerCount;
 			playerCount++;
 
 			clientThread.Name = "player" + playerCount;
@@ -179,12 +177,6 @@ public class TcpThreadServer : MonoBehaviour
 
 			readThread = new Thread (new ThreadStart (ReadData));
 			readThread.Start ();
-
-
-
-			string lastReceived = "";
-
-
 
 			while (true) {
 				Thread.Sleep (sleepTime);
@@ -227,7 +219,20 @@ public class TcpThreadServer : MonoBehaviour
 
 					Thread.Sleep (sleepTime);
 					if (listener) {
-						msg = receivedFromClient;
+						if (receivedFromClient.Split (':') [0].IndexOf ("1") != -1) {
+							pl1 += receivedFromClient.Split (':') [1];
+							msg = "1-" + pl1;
+						} else if (receivedFromClient.Split (':') [0].IndexOf ("2") != -1) {
+							pl2 += receivedFromClient.Split (':') [1];
+							msg = "2-" + pl2;
+						} else if (receivedFromClient.Split (':') [0].IndexOf ("3") != -1) {
+							pl3 += receivedFromClient.Split (':') [1];
+							msg = "3-" + pl3;
+						} else if (receivedFromClient.Split (':') [0].IndexOf ("4") != -1) {
+							pl4 += receivedFromClient.Split (':') [1];
+							msg = "4-" + pl4;
+						}
+						//msg = receivedFromClient;
 
 					}
 
@@ -249,6 +254,7 @@ public class TcpThreadServer : MonoBehaviour
 		void ReadData ()
 		{
 			while (true) {
+				Thread.Sleep (sleepTime);
 				receivedFromClient = reader.ReadLine ();
 				listener = true;
 				if (turn == playerCount) {

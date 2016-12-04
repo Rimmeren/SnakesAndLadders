@@ -203,7 +203,7 @@ public class TcpClient1 : MonoBehaviour
 
 			if (Input.GetKeyUp ("space")) {
 				//If the server tells me that it's my turn, then we run the (local) function to roll dice.
-				if (Int32.Parse (lineReceived.Split ('-') [1]) == myPlayerNumber) {
+				if (Int32.Parse (lineReceived.Split (':') [1]) == myPlayerNumber) {
 					print ("Vi mærker det");
 					rollDice ();
 					writer.WriteLine (myPlayerNumber + "-" + diceNum);
