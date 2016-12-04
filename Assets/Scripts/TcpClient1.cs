@@ -17,6 +17,7 @@ public class TcpClient1 : MonoBehaviour
 	int myPlayerNumber;
 	int playerNum;
 	int diceNum;
+	int playerPos;
 	float[] xPoses = {
 		17f,
 		13.3f,
@@ -213,26 +214,26 @@ public class TcpClient1 : MonoBehaviour
 			//Else the server message is about the other players, and we go to this code.
 			if (lineReceived.IndexOf ("-") != -1 && hasMoved == false) { 
 				playerNum = Int32.Parse (lineReceived.Split ('-') [0]);
-				diceNum = Int32.Parse (lineReceived.Split ('-') [1]);
+				playerPos = Int32.Parse (lineReceived.Split ('-') [1]);
 
 
 				if (playerNum == 1) {
-					sumbreror1 = diceNum;
+					sumbreror1 = playerPos;
 					player1.transform.position = new Vector3 (xPoses [sumbreror1], yPoses [sumbreror1]);
 				}
 
 				if (playerNum == 2) {
-					sumbreror2 = diceNum;
+					sumbreror2 = playerPos;
 					player2.transform.position = new Vector3 (xPoses [sumbreror2], yPoses [sumbreror2]);
 				}
 					
 				if (playerNum == 3) {
-					sumbreror3 = diceNum;
+					sumbreror3 = playerPos;
 					player3.transform.position = new Vector3 (xPoses [sumbreror3], yPoses [sumbreror3]);
 				}
 
 				if (playerNum == 4) {
-					sumbreror4 = diceNum;
+					sumbreror4 = playerPos;
 					player4.transform.position = new Vector3 (xPoses [sumbreror4], yPoses [sumbreror4]);
 				}
 				hasMoved = true;
