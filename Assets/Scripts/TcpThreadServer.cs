@@ -17,7 +17,8 @@ public class TcpThreadServer : MonoBehaviour
 	int port = 13456;
 
 
-	IPAddress myIp = IPAddress.Parse ("172.20.10.2");
+	IPAddress myIp = IPAddress.Parse("127.0.0.1");
+
 
 	//Server and Client connection
 	TcpListener listener;
@@ -44,7 +45,7 @@ public class TcpThreadServer : MonoBehaviour
 	void Start ()
 	{
 		DontDestroyOnLoad (this.gameObject);
-		print (myIp);
+		//print (myIp);
 	}
 		
 	// Update is called once per frame
